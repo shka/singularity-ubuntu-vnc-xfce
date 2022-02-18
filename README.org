@@ -1,0 +1,36 @@
+#+TITLE: singularity-ubuntu-vnc-xfce
+
+This is a singularity container of a headless [[https://releases.ubuntu.com/20.04/][Ubuntu 20.04]] with [[https://xfce.org/][Xfce desktop]].
+You can access the instance via a VNC viewer or a web broswer.
+
+* Usage
+** Build
+#+BEGIN_SRC shell
+  sudo singularity build ubuntu-vnc-xfce.sif Singularity
+#+END_SRC
+
+** Invoke
+#+BEGIN_SRC shell
+  mkdir newhome
+  singularity exec --bind $PWD/newhome:$HOME ubuntu-vnc-xfce.sif start_vnc.sh
+#+END_SRC
+In the first run it may ask a password for the VNC connection. Port
+5901 is waiting for your connection via the standard VNC
+viewers. Directory =$PWD/newhome= is the home directory of the
+instance; you may change it as you want.
+
+=start_vnc.sh= accepts options for =vncserver=; ex. if you would like
+to from the other, then add =-localhost no=.
+
+** noVNC
+#+BEGIN_SRC shell
+  singularity exec --bind $PWD/newhome:$HOME ubuntu-vnc-xfce.sif novnc.sh
+#+END_SRC
+To use a web browser instead of the VNC viewers, for example, run the
+command above then access to [[https://localhost:6901/vnc.html]]. Stop
+=novnc= by =C-c=.
+
+** Shutdown
+#+BEGIN_SRC shell
+  singularity exec --bind $PWD/newhome:$HOME ubuntu-vnc-xfce.sif stop_vnc.sh
+#+END_SRC
