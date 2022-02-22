@@ -8,6 +8,10 @@ From: ubuntu:20.04
 %labels
 	MAINTAINER "Shintaro KATAYAMA - https://github.com/shka"
 
+%environment
+	LANG=C.UTF-8
+	export LANG
+
 %files
 	./*.sh /usr/local/bin
 
