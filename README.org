@@ -9,6 +9,14 @@ You can access the instance via a VNC viewer or a web broswer.
   sudo singularity build ubuntu-vnc-xfce.sif Singularity
 #+END_SRC
 
+But practically it's better to add several more packages to the
+container before use, even if you configure conda. =Singularity.da= is
+an example.
+
+#+BEGIN_SRC shell
+  sudo singularity build ubuntu-vnc-xfce.da.sif Singularity.da
+#+END_SRC
+
 ** Invoke
 #+BEGIN_SRC shell
   mkdir newhome
