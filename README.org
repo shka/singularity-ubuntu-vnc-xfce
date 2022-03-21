@@ -11,7 +11,7 @@ You can access the instance via a VNC viewer or a web broswer.
 
 But practically it's better to add several more packages to the
 container before use, even if you configure conda. =Singularity.da= is
-an example.
+an example which adds several packages to =ubuntu-vnc-xfce.sif=.
 
 #+BEGIN_SRC shell
   sudo singularity build ubuntu-vnc-xfce.da.sif Singularity.da
@@ -20,25 +20,24 @@ an example.
 ** Invoke
 #+BEGIN_SRC shell
   mkdir newhome
-  singularity exec --bind $PWD/newhome:$HOME ubuntu-vnc-xfce.sif start_vnc.sh
+  singularity instance start --bind $PWD/newhome:$HOME ubuntu-vnc-xfce.sif vnc
 #+END_SRC
+
 In the first run it may ask a password for the VNC connection. Port
 5901 is waiting for your connection via the standard VNC
 viewers. Directory =$PWD/newhome= is the home directory of the
 instance; you may change it as you want.
 
-=start_vnc.sh= accepts options for =vncserver=; ex. if you would like
-to from the other, then add =-localhost no=.
-
-** noVNC
-#+BEGIN_SRC shell
-  singularity exec --bind $PWD/newhome:$HOME ubuntu-vnc-xfce.sif novnc.sh
-#+END_SRC
-To use a web browser instead of the VNC viewers, for example, run the
-command above then access to [[https://localhost:6901/vnc.html]]. Stop
-=novnc= by =C-c=.
+It accepts options for =vncserver=; ex. if you would like to from the
+other, then add =-localhost no=.
 
 ** Shutdown
 #+BEGIN_SRC shell
-  singularity exec --bind $PWD/newhome:$HOME ubuntu-vnc-xfce.sif stop_vnc.sh
+  singularity instance stop vnc
 #+END_SRC
+
+** Tips
+- [2022-03-21 Mon] To run this container on aarch64 (ex. through UTM
+  on M1 Mac), temporarily an option
+  =--env=LD_PRELOAD=/lib/aarch64-linux-gnu/libgcc_s.so.1= for
+  =singularity instance start= is required.
